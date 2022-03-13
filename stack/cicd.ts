@@ -7,7 +7,13 @@ export class Cicd extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
+    const input = ppl.CodePipelineSource.connection("cfchou/cf220311_cdk_ts", "main", {
+      connectionArn: "arn:aws:codestar-connections:ap-southeast-1:897882544000:connection/183630a4-d3f9-4ba3-943e-a025872036a1",
+      // allow submodule
+      // codeBuildCloneOutput: true,
+    });
     const synth = new ppl.CodeBuildStep("Build", {
+      input,
       projectName: "cf220311-build",
       env: {
         MY_ENV: "FOOBAR",
@@ -26,6 +32,7 @@ export class Cicd extends Stack {
       dockerEnabledForSynth: true,
       crossAccountKeys: false,
     });
+    pipeline.addStage(new InfraStage(this, "Stage"))
   }
 }
 
