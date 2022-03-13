@@ -8,8 +8,12 @@ import * as path from "path";
 export class Infra extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
+    console.log(`====================MY_ENV=${process.env.MY_ENV}`)
 
     const dummyFn = new lx_nodejs.NodejsFunction(this, 'dummy', {
+      environment: {
+        MY_ENV: `${process.env.MY_ENV}`,
+      },
       functionName: 'dummy-handler',
       handler: 'main',
       entry: path.join(__dirname, '/../src/dummy.ts'),
