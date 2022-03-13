@@ -19,10 +19,10 @@ export class Cicd extends Stack {
         MY_ENV: "FOOBAR",
       },
       installCommands: [
-        "npm install -g aws-cdk",
+        "npm install",
       ],
       commands: [
-        "cdk synth",
+        "npx cdk synth",
       ],
       primaryOutputDirectory: "cdk.out",
     });
